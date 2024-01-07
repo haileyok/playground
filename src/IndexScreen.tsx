@@ -11,6 +11,12 @@ export function IndexScreen({ navigation }: NativeStackScreenProps<any>) {
             navigation.navigate('GiphySearch')
           }}
         />
+        <Button
+          title="Animated Buttons"
+          onPress={() => {
+            navigation.navigate('AnimatedButtons')
+          }}
+        />
       </View>
     </ScrollView>
   )
