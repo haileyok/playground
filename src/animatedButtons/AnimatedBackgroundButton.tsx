@@ -4,6 +4,7 @@ import Animated, {
   runOnUI,
   useAnimatedStyle,
   useSharedValue,
+  withSequence,
   withTiming,
 } from 'react-native-reanimated'
 
@@ -22,6 +23,7 @@ export function AnimatedBackgroundButton({
 }: IProps) {
   const backgroundOpacity = useSharedValue(0)
   const borderWidth = useSharedValue(20)
+  const scale = useSharedValue(1)
 
   const onPressWrapper = React.useCallback(() => {
     onPress?.()
@@ -38,13 +40,19 @@ export function AnimatedBackgroundButton({
 
   const runAnimation = () => {
     'worklet'
-    backgroundOpacity.value = withTiming(1, { duration: 200 }, () => {
+    scale.value = withSequence(
+      withTiming(1.2, { duration: 150 }),
+      withTiming(1, { duration: 200 }),
+    )
+
+    backgroundOpacity.value = withTiming(0.75, { duration: 200 }, () => {
       borderWidth.value = withTiming(0, { duration: 300 }, reset)
     })
   }
 
-  const buttonStyle = useAnimatedStyle(() => ({
+  const containerStyle = useAnimatedStyle(() => ({
     backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity.value}`,
+    transform: [{ scale: scale.value }],
   }))
 
   const backgroundStyle = useAnimatedStyle(() => ({
@@ -53,7 +61,7 @@ export function AnimatedBackgroundButton({
   }))
 
   return (
-    <Animated.View style={[styles.container, buttonStyle]}>
+    <Animated.View style={[styles.container, containerStyle]}>
       <Animated.View
         style={[
           backgroundStyle,
