@@ -17,6 +17,18 @@ export function IndexScreen({ navigation }: NativeStackScreenProps<any>) {
             navigation.navigate('AnimatedButtons')
           }}
         />
+        <Button
+          title="Pro Text"
+          onPress={() => {
+            navigation.navigate('ProText')
+          }}
+        />
+        <Button
+          title="Pro Text Scroll Header"
+          onPress={() => {
+            navigation.navigate('ProTextScrollHeader')
+          }}
+        />
       </View>
     </ScrollView>
   )
